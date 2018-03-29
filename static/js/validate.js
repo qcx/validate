@@ -161,8 +161,8 @@
 		// Check any custom validity errors
 		var customValidityError = null;
 
-		for (var key in localsettings.customValidity) {
-			if (localsettings.customValidity.hasOwnProperty(key) && localSettings.customValidity[key].check) {
+		for (var key in localSettings.customValidity) {
+			if (localSettings.customValidity.hasOwnProperty(key) && localSettings.customValidity[key].check) {
 				customValidityError = localSettings.customValidity[key].message;
 				break;
 			}
