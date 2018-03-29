@@ -162,7 +162,7 @@
 		var customValidityError = null;
 
 		for (var key in localSettings.customValidity) {
-			if (localSettings.customValidity.hasOwnProperty(key) && localSettings.customValidity[key].check) {
+			if (localSettings.customValidity.hasOwnProperty(key) && localSettings.customValidity[key].check(field)) {
 				customValidityError = localSettings.customValidity[key].message;
 				break;
 			}
