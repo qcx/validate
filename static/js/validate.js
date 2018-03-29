@@ -2,7 +2,7 @@
  * validate v1.1.3: A lightweight form validation script that augments native HTML5 form validation elements and attributes.
  * (c) 2018 Chris Ferdinandi
  * MIT License
- * http://github.com/cferdinandi/validate
+ * http://github.com/qcx/validate
  */
 
 (function (root, factory) {
@@ -47,6 +47,8 @@
 		messageRangeOverflow: 'Please select a value that is no more than {max}.',
 		messageRangeUnderflow: 'Please select a value that is no less than {min}.',
 		messageGeneric: 'The value you entered for this field is invalid.',
+
+		customValidity: {},
 
 		// Form Submission
 		disableSubmit: false,
@@ -154,6 +156,20 @@
 
 		// Don't validate submits, buttons, file and reset inputs, and disabled fields
 		if (field.disabled || field.type === 'file' || field.type === 'reset' || field.type === 'submit' || field.type === 'button') return;
+
+
+		// Check any custom validity errors
+		var customValidityError = null;
+
+		for (var key in localsettings.customValidity) {
+			if (localsettings.customValidity.hasOwnProperty(key) && localSettings.customValidity[key].check) {
+				customValidityError = localSettings.customValidity[key].message;
+				break;
+			}
+		}
+		
+		if (customValidityError) return customValidityError;
+		
 
 		// Get validity
 		var validity = field.validity;

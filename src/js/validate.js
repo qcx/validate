@@ -41,6 +41,8 @@
 		messageRangeUnderflow: 'Please select a value that is no less than {min}.',
 		messageGeneric: 'The value you entered for this field is invalid.',
 
+		customValidity: {},
+
 		// Form Submission
 		disableSubmit: false,
 		onSubmit: function () {},
@@ -147,6 +149,20 @@
 
 		// Don't validate submits, buttons, file and reset inputs, and disabled fields
 		if (field.disabled || field.type === 'file' || field.type === 'reset' || field.type === 'submit' || field.type === 'button') return;
+
+
+		// Check any custom validity errors
+		var customValidityError = null;
+
+		for (var key in localsettings.customValidity) {
+			if (localsettings.customValidity.hasOwnProperty(key) && localSettings.customValidity[key].check) {
+				customValidityError = localSettings.customValidity[key].message;
+				break;
+			}
+		}
+		
+		if (customValidityError) return customValidityError;
+		
 
 		// Get validity
 		var validity = field.validity;
